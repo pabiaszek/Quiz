@@ -2,6 +2,10 @@ dashboard:
     path: /
     controller: App\Controller\DashboardController::dashboardAction
 
+questions:
+    path: /questions/{quiz}
+    controller: App\Controller\DashboardController::questionsAction
+
 create_quiz:
     path: /create_quiz
     controller: App\Controller\CreationController::createQuizAction

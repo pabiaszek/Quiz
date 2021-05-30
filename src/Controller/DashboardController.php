@@ -20,4 +20,11 @@ class DashboardController extends AbstractController
             'quizzes' => $quizzes,
         ]);
     }
+
+    public function questionsAction(Quiz $quiz)
+    {
+        return $this->render('/questions.html.twig', [
+            'quiz' => $quiz,
+        ]);
+    }
 }

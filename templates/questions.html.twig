@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+     <div class="container">
+         <h1>{{ quiz.name }}</h1>
+         <hr>
+         <div class="d-flex flex-column">
+         {% for question in quiz.questions %}
+                 <h2>{{ loop.index }}. {{ question.question }}</h2>
+                 <h4 class="mb-4">{{ question.answer }}</h4>
+         {% endfor %}
+         </div>
+     </div>
+{% endblock %}
