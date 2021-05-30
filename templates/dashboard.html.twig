@@ -2,6 +2,7 @@
 
 {% block body %}
      <div class="container">
+         <a href="{{ path('create_quiz') }}" class="btn btn-success my-5">Stwórz quiz <i class="ml-2 fa fa-plus"></i></a>
          <div class="d-flex flex-wrap">
          {% for quiz in quizzes %}
              <div class="card m-3" style="width: 18rem;">

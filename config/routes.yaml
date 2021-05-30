@@ -1,3 +1,7 @@
 dashboard:
     path: /
     controller: App\Controller\DashboardController::dashboardAction
+
+create_quiz:
+    path: /create_quiz
+    controller: App\Controller\CreationController::createQuizAction

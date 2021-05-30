@@ -5,9 +5,6 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\OneToMany;
 
 /**
@@ -34,27 +31,16 @@ class Quiz
      */
     private $name;
 
-    /**
-     * @var Collection
-     *
-     * @ManyToMany(targetEntity="Category")
-     * @JoinTable(name="quiz_categories",
-     *      joinColumns={@JoinColumn(name="quiz_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="category_id", referencedColumnName="id", unique=true)}
-     *      )
-     */
-    private $categories;
 
     /**
      * @var Collection
      *
-     * @OneToMany(targetEntity="Question", mappedBy="quiz")
+     * @OneToMany(targetEntity="Question", mappedBy="quiz", cascade={"persist"}, orphanRemoval=true)
      */
     private $questions;
 
     public function __construct()
     {
-        $this->categories = new ArrayCollection();
         $this->questions = new ArrayCollection();
     }
 
@@ -69,7 +55,7 @@ class Quiz
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -80,38 +66,6 @@ class Quiz
     public function setName(string $name): void
     {
         $this->name = $name;
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getCategories(): Collection
-    {
-        return $this->categories;
-    }
-
-    /**
-     * @param Collection $categories
-     */
-    public function setCategories(Collection $categories): void
-    {
-        $this->categories = $categories;
-    }
-
-    /**
-     * @param Category $category
-     */
-    public function addCategory(Category $category): void
-    {
-        $this->categories->add($category);
-    }
-
-    /**
-     * @param Category $category
-     */
-    public function removeCategory(Category $category): void
-    {
-        $this->categories->removeElement($category);
     }
 
     /**

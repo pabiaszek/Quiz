@@ -48,7 +48,7 @@ class Question
     /**
      * @var Quiz
      *
-     * @ORM\ManyToOne(targetEntity="Quiz")
+     * @ORM\ManyToOne(targetEntity="Quiz", inversedBy="questions", cascade={"persist"},)
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="quiz_id", referencedColumnName="id")
      * })
@@ -66,7 +66,7 @@ class Question
     /**
      * @return string
      */
-    public function getQuestion(): string
+    public function getQuestion()
     {
         return $this->question;
     }
@@ -82,7 +82,7 @@ class Question
     /**
      * @return Category
      */
-    public function getCategory(): Category
+    public function getCategory()
     {
         return $this->category;
     }
@@ -109,6 +109,22 @@ class Question
     public function setQuiz(Quiz $quiz): void
     {
         $this->quiz = $quiz;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAnswer()
+    {
+        return $this->answer;
+    }
+
+    /**
+     * @param string $answer
+     */
+    public function setAnswer(string $answer): void
+    {
+        $this->answer = $answer;
     }
 
 
