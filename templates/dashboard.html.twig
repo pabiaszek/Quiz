@@ -10,6 +10,7 @@
                      <h5 class="card-title">{{ quiz.name }}</h5>
                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                      <a href="{{ path('questions', {quiz: quiz.id}) }}" class="btn btn-primary">Zobacz pytania</a>
+                     <a href="{{ path('game_start_quiz', {quiz: quiz.id}) }}" class="btn btn-success mt-2">Rozpocznij quiz</a>
                  </div>
              </div>
          {% endfor %}

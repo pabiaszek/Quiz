@@ -9,3 +9,16 @@ questions:
 create_quiz:
     path: /create_quiz
     controller: App\Controller\CreationController::createQuizAction
+
+game_start_quiz:
+    path: /start_quiz/{quiz}
+    controller: App\Controller\GameController::startQuizAction
+
+game_categories:
+    path: /game/categories/{game}
+    controller: App\Controller\GameController::categoriesAction
+
+game_question:
+    path: /game/question/{game}/{category}
+    controller: App\Controller\GameController::questionAction
+

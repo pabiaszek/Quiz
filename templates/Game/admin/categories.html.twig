@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="text-center mt-5">
+            <h1>Wybierz kategorię</h1>
+            <div class="d-flex flex-column align-items-center mt-5">
+                {% for category in categories %}
+                    <a href="{{ path('game_question', {game: game.id, category: category.id}) }}" class="btn btn-warning my-2"><h3>{{ category }}</h3></a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

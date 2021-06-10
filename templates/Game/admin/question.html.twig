@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="text-center mt-5">
+            Kategoria : {{ category }}
+            <h1>{{ question.question }}</h1>
+            <h4>Poprawna odpowiedź: {{ question.answer }}</h4>
+
+            <div class="d-flex justify-content-center mt-5">
+                <a href="{{ path('game_categories', {game: game.id}) }}" class="btn btn-warning m-2">Wróć do wyboru kategorii</a>
+                <a href="{{ path('game_question', {game: game.id, category: category.id}) }}" class="btn btn-primary m-2">Następne pytanie z tej kategorii</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
