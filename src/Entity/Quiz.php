@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
 
@@ -39,9 +40,17 @@ class Quiz
      */
     private $questions;
 
+    /**
+     * @var Collection
+     *
+     * @OneToMany(targetEntity="QuizGame", mappedBy="quiz", cascade={"persist"}, orphanRemoval=true)
+     */
+    private $games;
+
     public function __construct()
     {
         $this->questions = new ArrayCollection();
+        $this->games = new ArrayCollection();
     }
 
     /**
@@ -99,5 +108,32 @@ class Quiz
     public function removeQuestion(Question $question): void
     {
         $this->questions->removeElement($question);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getGames(): Collection
+    {
+        return $this->games;
+    }
+
+    /**
+     * @param Collection $games
+     */
+    public function setGames(Collection $games): void
+    {
+        $this->games = $games;
+    }
+
+    /**
+     * @return ArrayCollection|Collection
+     */
+    public function getUnfinishedGames()
+    {
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->isNull('endedAt'));
+
+        return $this->games->matching($criteria);
     }
 }

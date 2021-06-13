@@ -7,14 +7,14 @@ namespace App\Controller;
 
 
 use App\Entity\Quiz;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\QuizRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DashboardController extends AbstractController
 {
-    public function dashboardAction(EntityManagerInterface $entityManager)
+    public function dashboardAction(QuizRepository $quizRepository)
     {
-        $quizzes = $entityManager->getRepository(Quiz::class)->findAll();
+        $quizzes = $quizRepository->getQuizzesWithStartedGames();
 
         return $this->render('/dashboard.html.twig', [
             'quizzes' => $quizzes,

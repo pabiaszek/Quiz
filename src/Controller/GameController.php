@@ -10,6 +10,7 @@ use App\Entity\QuizGame;
 use App\Entity\QuizGameQuestion;
 use App\Repository\CategoryRepository;
 use App\Repository\QuestionRepository;
+use App\Repository\QuizGameQuestionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class GameController extends \Symfony\Bundle\FrameworkBundle\Controller\AbstractController
@@ -70,6 +71,27 @@ class GameController extends \Symfony\Bundle\FrameworkBundle\Controller\Abstract
             'question' => $question[0],
             'game'  => $game,
             'category' => $category,
+        ]);
+    }
+
+    public function continueAction(QuizGame $game, QuizGameQuestionRepository $repository)
+    {
+        $question = $repository->findOneBy([
+            'quizGame' => $game,
+            'correct' => null,
+        ]);
+
+        if ($question) {
+
+            return $this->render('/Game/admin/question.html.twig', [
+                'question' => $question->getQuestion(),
+                'game'  => $question->getQuizGame(),
+                'category' => $question->getQuestion()->getCategory(),
+            ]);
+        }
+
+        return $this->redirectToRoute('game_categories', [
+            'game' => $game->getId(),
         ]);
     }
 }

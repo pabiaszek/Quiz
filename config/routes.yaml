@@ -22,3 +22,7 @@ game_question:
     path: /game/question/{game}/{category}
     controller: App\Controller\GameController::questionAction
 
+game_continue:
+    path: /game/continue/{game}
+    controller: App\Controller\GameController::continueAction
+
