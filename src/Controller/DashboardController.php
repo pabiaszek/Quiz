@@ -14,7 +14,7 @@ class DashboardController extends AbstractController
 {
     public function dashboardAction(QuizRepository $quizRepository)
     {
-        $quizzes = $quizRepository->getQuizzesWithStartedGames();
+        $quizzes = $quizRepository->getQuizzesWithGames();
 
         return $this->render('/dashboard.html.twig', [
             'quizzes' => $quizzes,

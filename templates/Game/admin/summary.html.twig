@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+     <div class="container">
+         <h1>{{ quiz.name }}</h1>
+         <hr>
+         {% if results %}
+            <h3>Poprawnych odpowiedzi: {{ results.correct }}/{{ results.all }}</h3>
+         {% else %}
+             <h3>Brak wyników</h3>
+         {% endif %}
+         <div class="d-flex flex-column mt-4">
+         {% for question in questions %}
+                 <h4>{{ loop.index }}. {{ question.question.question }}</h4>
+                 <span>Poprawna odpowiedź: {{ question.question.answer }}</span>
+                 <span class="mb-4">
+                     Udzielona odpowiedź:
+                     {% if question.correct %}
+                         <span class="badge badge-success">Poprawna</span>
+                     {% else %}
+                         <span class="badge badge-danger">Niepoprawna</span>
+                     {% endif%}
+                 </span>
+         {% endfor %}
+         </div>
+     </div>
+{% endblock %}

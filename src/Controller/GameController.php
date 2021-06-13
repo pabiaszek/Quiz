@@ -117,4 +117,25 @@ class GameController extends \Symfony\Bundle\FrameworkBundle\Controller\Abstract
            'message' => $message,
         ]);
     }
+
+    /**
+     * @param QuizGame $game
+     * @param QuizGameQuestionRepository $repository
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function summaryAction(QuizGame $game, QuizGameQuestionRepository $repository): \Symfony\Component\HttpFoundation\Response
+    {
+        if (!$game->isEnded()) {
+            $game->end();
+            $this->entityManager->flush();
+        }
+        $results = $repository->getResults($game);
+        $questions = $repository->getAnsweredQuestionsForGame($game);
+
+        return $this->render('/Game/admin/summary.html.twig', [
+            'results' => $results,
+            'quiz' => $game->getQuiz(),
+            'questions' => $questions,
+        ]);
+    }
 }

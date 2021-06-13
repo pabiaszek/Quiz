@@ -136,4 +136,15 @@ class Quiz
 
         return $this->games->matching($criteria);
     }
+
+    /**
+     * @return ArrayCollection|Collection
+     */
+    public function getFinishedGames()
+    {
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->neq('endedAt', null));
+
+        return $this->games->matching($criteria);
+    }
 }

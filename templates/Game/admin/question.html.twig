@@ -16,6 +16,7 @@
                 <a href="{{ path('game_categories', {game: game.id}) }}" class="btn btn-warning m-2">Wróć do wyboru kategorii</a>
                 <a id="next-question-button" href="{{ path('game_question', {game: game.id, category: category.id}) }}" class="btn btn-primary m-2 disabled">Następne pytanie z tej kategorii</a>
             </div>
+            <a href="{{ path('game_summary', {game: game.id}) }}" class="btn btn-secondary">Zakończ Quiz</a>
         </div>
     </div>
 {% endblock %}

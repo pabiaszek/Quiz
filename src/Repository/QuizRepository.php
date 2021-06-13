@@ -17,11 +17,11 @@ class QuizRepository extends ServiceEntityRepository
         parent::__construct($registry, Quiz::class);
     }
 
-    public function getQuizzesWithStartedGames()
+    public function getQuizzesWithGames()
     {
         $qb = $this->createQueryBuilder('q');
         $qb
-            ->leftJoin(QuizGame::class, 'g', 'WITH', 'g.quiz = q AND g.endedAt IS NULL')
+            ->leftJoin(QuizGame::class, 'g', 'WITH', 'g.quiz = q')
             ->orderBy('q.id', 'desc')
         ;
 

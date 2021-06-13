@@ -29,3 +29,7 @@ game_continue:
 game_question_result:
     path: /game/question-result/{question}
     controller: App\Controller\GameController::questionResultAjaxAction
+
+game_summary:
+    path: /game/summary/{game}
+    controller: App\Controller\GameController::summaryAction

@@ -12,11 +12,20 @@
                      <a href="{{ path('questions', {quiz: quiz.id}) }}" class="btn btn-primary">Zobacz pytania</a>
                      <a href="{{ path('game_start_quiz', {quiz: quiz.id}) }}" class="btn btn-success mt-2">Rozpocznij quiz</a>
                      {% if not quiz.getUnfinishedGames().isEmpty() %}
-                        <label class="mt-2" for="continue-{{ quiz.id }}">Kontynuuj rozpoczęty quiz:</label>
+                        <label class="mt-4" for="continue-{{ quiz.id }}">Kontynuuj rozpoczęty quiz:</label>
                         <select id="continue-{{ quiz.id }}" onchange="location = this.value;">
                             <option value="">wybierz</option>
                             {% for game in quiz.getUnfinishedGames() %}
-                                <option value="{{ path('game_continue', {game: game.id}) }}">Rozpoczęta: {{ game.startedAt|date('d.m.Y H:i') }}</option>
+                                <option value="{{ path('game_continue', {game: game.id}) }}">Rozpoczęty: {{ game.startedAt|date('d.m.Y H:i') }}</option>
+                            {% endfor %}
+                        </select>
+                     {% endif %}
+                     {% if not quiz.getFinishedGames().isEmpty() %}
+                        <label class="mt-4" for="continue-{{ quiz.id }}">Podsumowanie rozpoczętych quizów:</label>
+                        <select id="continue-{{ quiz.id }}" onchange="location = this.value;">
+                            <option value="">wybierz</option>
+                            {% for game in quiz.getFinishedGames() %}
+                                <option value="{{ path('game_summary', {game: game.id}) }}">Zakończony: {{ game.endedAt|date('d.m.Y H:i') }}</option>
                             {% endfor %}
                         </select>
                      {% endif %}

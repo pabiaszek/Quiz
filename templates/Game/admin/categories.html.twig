@@ -9,6 +9,7 @@
                     <a href="{{ path('game_question', {game: game.id, category: category.id}) }}" class="btn btn-warning my-2"><h3>{{ category }}</h3></a>
                 {% endfor %}
             </div>
+            <a href="{{ path('game_summary', {game: game.id}) }}" class="btn btn-secondary">Zakończ Quiz</a>
         </div>
     </div>
 {% endblock %}
