@@ -7,10 +7,38 @@
             <h1>{{ question.question }}</h1>
             <h4>Poprawna odpowiedź: {{ question.answer }}</h4>
 
+            <div class="question-result mt-5"></div>
+            <div class="d-flex justify-content-center mt-2">
+                <button class="question-result-button btn btn-danger m-2" data-result="0">Niepoprawna</button>
+                <button class="question-result-button btn btn-success m-2" data-result="1">Poprawna</button>
+            </div>
             <div class="d-flex justify-content-center mt-5">
                 <a href="{{ path('game_categories', {game: game.id}) }}" class="btn btn-warning m-2">Wróć do wyboru kategorii</a>
-                <a href="{{ path('game_question', {game: game.id, category: category.id}) }}" class="btn btn-primary m-2">Następne pytanie z tej kategorii</a>
+                <a id="next-question-button" href="{{ path('game_question', {game: game.id, category: category.id}) }}" class="btn btn-primary m-2 disabled">Następne pytanie z tej kategorii</a>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        $(function() {
+            $('.question-result-button').click(function () {
+                var result = $(this).data('result');
+                $.ajax({
+                    url: '{{ path('game_question_result', {question: gameQuestion.id}) }}',
+                    data: {
+                        result: result,
+                    },
+                    beforeSend: function () {
+                        $('.question-result').html('<i class="fa fa-spin fa-circle-o-notch">');
+                    },
+                    success: function (data) {
+                        $('.question-result').html(data.message);
+                        $('#next-question-button').removeClass('disabled');
+                    },
+                });
+            });
+        });
+    </script>
 {% endblock %}

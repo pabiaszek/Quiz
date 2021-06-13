@@ -12,6 +12,8 @@ use App\Repository\CategoryRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\QuizGameQuestionRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class GameController extends \Symfony\Bundle\FrameworkBundle\Controller\AbstractController
 {
@@ -57,8 +59,9 @@ class GameController extends \Symfony\Bundle\FrameworkBundle\Controller\Abstract
                 'game' => $game->getId(),
             ]);
         }
+        $gameQuestion = $question[1];
 
-        if (!$question[1]) {
+        if (!$gameQuestion) {
             $gameQuestion = new QuizGameQuestion();
             $gameQuestion->setQuizGame($game);
             $gameQuestion->setQuestion($question[0]);
@@ -69,6 +72,7 @@ class GameController extends \Symfony\Bundle\FrameworkBundle\Controller\Abstract
 
         return $this->render('/Game/admin/question.html.twig', [
             'question' => $question[0],
+            'gameQuestion' => $gameQuestion,
             'game'  => $game,
             'category' => $category,
         ]);
@@ -76,22 +80,41 @@ class GameController extends \Symfony\Bundle\FrameworkBundle\Controller\Abstract
 
     public function continueAction(QuizGame $game, QuizGameQuestionRepository $repository)
     {
-        $question = $repository->findOneBy([
+        $gameQuestion = $repository->findOneBy([
             'quizGame' => $game,
             'correct' => null,
         ]);
 
-        if ($question) {
+        if ($gameQuestion) {
+            $question = $gameQuestion->getQuestion();
 
             return $this->render('/Game/admin/question.html.twig', [
-                'question' => $question->getQuestion(),
-                'game'  => $question->getQuizGame(),
-                'category' => $question->getQuestion()->getCategory(),
+                'question' => $question,
+                'gameQuestion' => $gameQuestion,
+                'game'  => $gameQuestion->getQuizGame(),
+                'category' => $question->getCategory(),
             ]);
         }
 
         return $this->redirectToRoute('game_categories', [
             'game' => $game->getId(),
+        ]);
+    }
+
+    public function questionResultAjaxAction(Request $request, QuizGameQuestion $question)
+    {
+        $result = (bool) $request->get('result');
+
+        $question->setCorrect($result);
+        $this->entityManager->flush();
+        if ($result) {
+            $message = 'Udzielona dpowiedź poprawna';
+        } else {
+            $message = 'Udzielona dpowiedź niepoprawna';
+        }
+
+        return new JsonResponse([
+           'message' => $message,
         ]);
     }
 }

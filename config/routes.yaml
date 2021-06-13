@@ -26,3 +26,6 @@ game_continue:
     path: /game/continue/{game}
     controller: App\Controller\GameController::continueAction
 
+game_question_result:
+    path: /game/question-result/{question}
+    controller: App\Controller\GameController::questionResultAjaxAction
